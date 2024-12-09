@@ -1,18 +1,38 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:form/infrastructure/inputs/inputs.dart';
+
+import 'package:formz/formz.dart';
 
 part 'register_state.dart';
 
-class RegisterCubit extends Cubit<RegisterState> {
-  RegisterCubit() : super(const RegisterState());
+class RegisterCubit extends Cubit<RegisterFormState> {
+  RegisterCubit() : super(const RegisterFormState());
 
   void onSubmit() {
+    emit(
+      state.copyWith(
+        formStatus: FormStatus.validating ,
+        username: Username.dirty( state.username.value ),
+        password: Password.dirty( state.password.value ),
+
+        isValid : Formz.validate([
+          state.username,
+          state.password
+          //TODO state.email
+        ])
+      )
+    );
     print('submmit : $state');
   }
 
   // Se definen los metodos para cambiar el estado del formulario
   void usernameChanged(String value) {
-    emit(state.copyWith(username: value));
+    final username = Username.dirty(value);
+    emit(state.copyWith(
+      username: username ,
+      isValid : Formz.validate([ username ]),
+      ));
   }
 
   void emailChanged(String value) {
@@ -20,6 +40,11 @@ class RegisterCubit extends Cubit<RegisterState> {
   }
 
   void passwordChanged(String value) {
-    emit(state.copyWith(password: value));
+    final password = Password.dirty(value);
+    emit(state.copyWith(
+        password: password,
+        isValid: Formz.validate([ password , state.username ])
+    ));
   }
 }
+

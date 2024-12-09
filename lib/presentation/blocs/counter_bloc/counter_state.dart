@@ -13,7 +13,7 @@ class CounterState extends Equatable {
   CounterState copyWith({
     int? counter,
     int? transactionCount,
-  })=> CounterState(
+  }) => CounterState(
     counter: counter ?? this.counter,
     transactionCount: transactionCount ??     this.transactionCount,
   );

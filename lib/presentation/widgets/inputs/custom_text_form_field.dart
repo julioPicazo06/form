@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class CustomTextFormField extends StatelessWidget {
   final String? label;
   final String? hintText;
-  final String? errorText;
+  final String? errorMessage;
   final bool? obscureText;
   final Function (String)? onChanged;
   final String? Function(String?)? validator;
@@ -14,7 +14,7 @@ class CustomTextFormField extends StatelessWidget {
       super.key, 
       this.label, 
       this.hintText, 
-      this.errorText, 
+      this.errorMessage, 
       this.onChanged, 
       this.validator, 
       this.obscureText
@@ -47,7 +47,7 @@ class CustomTextFormField extends StatelessWidget {
           hintText: hintText,
           // prefixIcon:  Icon(Icons.person , color : colors.primary),
           // suffixIcon: Icon(Icons.check_circle, color: colors.secondary),
-          errorText: errorText),
+          errorText: errorMessage),
     );
   }
 }

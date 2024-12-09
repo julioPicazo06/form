@@ -1,19 +1,31 @@
 import 'package:formz/formz.dart';
 
-enum UserNameError { empty  , length }
+enum UsernameError { empty  , length }
 
-class UserName extends FormzInput<String , UserNameError>{
+class Username extends FormzInput<String , UsernameError>{
 
-  const UserName.pure() : super.pure('');
-  const UserName.dirty( String value ) : super.dirty(value);
+  const Username.pure() : super.pure('');
+  const Username.dirty([String value = '']) : super.dirty(value);
+
+  String? get errorMessage {
+    if (isValid || isPure) return null;
+
+    if(displayError == UsernameError.empty) return 'Username is empty';
+    if(displayError == UsernameError.length) return 'Username is too short';
+
+    return null;
+  }
+
 
   @override
-  UsserNameError? validator(String value){
+  UsernameError? validator(String value){
 
-    if ( value.isEmpty ) return UserNameError.empty;
+      if ( value.isEmpty || value.trim().isEmpty) return UsernameError.empty;
+      if ( value.length < 6 ) return UsernameError.length;
+
+      return null;
 
 
-    return value.isEmpty ? NameInputError.empty : null
   }
 
 
